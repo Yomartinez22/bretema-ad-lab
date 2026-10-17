@@ -169,6 +169,24 @@ What this does NOT cover:
 - **Password exceptions,** accepted on purpose and written down: a 12-character minimum instead of
   15, and no check against lists of leaked passwords yet.
 
-**What comes next (E2):** I will connect this domain to Microsoft Entra ID with Entra Connect, so
-Brétema's users appear in the cloud with their `bretemacomp.com` identity, and then protect access
-with Conditional Access: MFA plus a compliant device.
+- **Movers.** The scripts cover joiners and leavers, not movers: when someone changes department,
+  nothing removes their old groups. That is privilege creep, and access reviews are the safety net.
+- **The initial password does not expire.** If a new hire starts late, the password set by the admin
+  stays valid until first logon. In Entra, a Temporary Access Pass solves this: single-use and
+  time-limited.
+- **Cloud sessions.** The leaver script works on Active Directory. Revoking Entra sessions is a
+  separate cloud step, and an already-issued token keeps working until it expires.
+
+## Update, October 2026: stage E2 has started
+
+- **Done:** a Microsoft Entra ID tenant with `bretemacomp.com` verified, and Microsoft Entra Connect
+  Sync on the domain controller with **password hash sync** and **OU-scoped sync**: only the Tier 2
+  users and groups go to the cloud; Tier 0, Tier 1, admin accounts and the leavers OU stay out. I
+  validated the scope in **staging mode** before the first export.
+- **A side effect I designed for:** moving a leaver to the leavers OU takes the account out of the
+  sync scope, so Entra soft-deletes it on the next sync cycle.
+- **Lab exception, written down:** Entra Connect runs on the domain controller because the lab has
+  limited RAM. In production it belongs on a dedicated Tier 0 server, because its sync account has
+  directory replication rights.
+- **Next:** Conditional Access (MFA plus a compliant device), PIM for admin roles, and an access
+  review.

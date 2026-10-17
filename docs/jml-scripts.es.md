@@ -70,7 +70,7 @@ Cada prueba se predijo antes de ejecutarla.
 | 6 | Baja de `adm0-miglesias` | ✅ rechazada: Domain Admins, por anidamiento a través de T0-Admins |
 | 7 | Baja de `Administrator` | ✅ rechazada |
 | 8 | Baja de Pedro, dos veces | ✅ desactiva, apunta y quita `GG-Produccion`, mueve a `Bajas`; la 2ª vez no cambia nada |
-| 9 | Ciclo completo de Sofía Núñez: alta → baja → vuelve | ✅ `sofia.nunez` creado; baja en 5 pasos; el 2º alta se para porque la cuenta existe desactivada, **sin llegar a pedir la contraseña** |
+| 9 | Ciclo completo de Sofía Núñez: alta a baja a vuelve | ✅ `sofia.nunez` creado; baja en 5 pasos; el 2º alta se para porque la cuenta existe desactivada, **sin llegar a pedir la contraseña** |
 
 ## Lo que NO cubre
 

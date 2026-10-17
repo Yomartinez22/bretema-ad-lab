@@ -6,8 +6,8 @@
 
 ## 1. Qué es esto
 
-**Brétema Componentes S.L.** es un proveedor de piezas de automoción de segundo nivel —vende a las
-empresas que suministran a las fábricas de coches—, con **unas 40 personas en Vigo**.
+**Brétema Componentes S.L.** es un proveedor de piezas de automoción de segundo nivel , vende a las
+empresas que suministran a las fábricas de coches, , con **unas 40 personas en Vigo**.
 
 Sus **clientes, fabricantes alemanes, le exigen la certificación TISAX** de seguridad de la
 información, y eso obliga a **controlar el acceso privilegiado**: quién puede administrar qué, y
@@ -32,7 +32,7 @@ dejaría allí sus credenciales y quien controlase esa máquina se las llevaría
 flowchart LR
   subgraph T0["Tier 0 · control del dominio"]
     DC01["DC01"]
-    A0["adm0-miglesias (T0-Admins → Domain Admins)"]
+    A0["adm0-miglesias (T0-Admins a Domain Admins)"]
   end
   subgraph T1["Tier 1 · servidores (vacío por ahora)"]
     S1[" "]
@@ -66,7 +66,7 @@ corp.lab
 |---|---|---|---|
 | Marta Iglesias, responsable de IT | `marta.iglesias` | `adm2-miglesias` | `adm0-miglesias` |
 | Diego Pazos, técnico de soporte | `diego.pazos` | `adm2-dpazos` | ❌ no tiene |
-| Ana García · Luis Fernández · Carmen López | sus cuentas | — | — |
+| Ana García · Luis Fernández · Carmen López | sus cuentas |, |, |
 
 - **Marta tiene una cuenta por nivel** porque cada una solo se usa en el suyo. Su cuenta normal es la
   que lee el correo y navega, la más expuesta al phishing: si fuera administradora del dominio, un
@@ -83,8 +83,8 @@ Admins*, *Enterprise Admins* y *Schema Admins* iniciar sesión **en local** y **
 remoto** en los equipos de Tier 2. Va en `Equipos` porque es una norma sobre **en qué máquina** se
 puede entrar.
 *Prueba:* antes de aplicarla predije el resultado de 4 cuentas y acerté las 4. `CORP\Administrator`
-y `adm0-miglesias` ❌ —esta última solo es Domain Admin por anidamiento, a través de `T0-Admins`, y
-aun así queda bloqueada: el token de inicio de sesión lleva todos los grupos, también los anidados—;
+y `adm0-miglesias` ❌ , esta última solo es Domain Admin por anidamiento, a través de `T0-Admins`, y
+aun así queda bloqueada: el token de inicio de sesión lleva todos los grupos, también los anidados, ;
 `adm2-dpazos` y `ana.garcia` ✅.
 
 **GPO 2 · contraseñas.** Política del dominio: **mínimo 12 caracteres**. Y una **PSO** (política de
@@ -92,8 +92,8 @@ contraseñas de grano fino) para `T0-Admins` y *Domain Admins*: **mínimo 20**, 
 caducidad y bloqueo a los 10 intentos. Una GPO aplica la misma política a todo el dominio; para
 exigir más a un grupo hace falta una PSO.
 *Prueba:* `Get-ADUserResultantPasswordPolicy adm0-miglesias` devuelve la PSO (para `ana.garcia`, nada:
-le toca la del dominio). Subir la política **no** obligó a Ana a cambiar su contraseña antigua —AD
-solo guarda la huella, no puede medir la contraseña vieja—, y un *reset* a 10 caracteres **fue
+le toca la del dominio). Subir la política **no** obligó a Ana a cambiar su contraseña antigua , AD
+solo guarda la huella, no puede medir la contraseña vieja, , y un *reset* a 10 caracteres **fue
 rechazado**. La política se comprueba solo al poner una contraseña.
 
 **GPO 3 · auditoría avanzada.** Enlazada a la OU `Domain Controllers`: registra validación de
@@ -121,7 +121,7 @@ Nota de riesgo, de 0 (mejor) a 100. La global es la peor de las cuatro categorí
   Users*: al crear `adm0-miglesias` pasé de 1 a 2. **Al endurecer creé más cuentas con poder, y con
   ellas más superficie que proteger.**
 - **Tercera pasada:** `adm0-miglesias` a *Protected Users* (sigue entrando en DC01, ahora con su UPN)
-  y `Administrator` marcada como no delegable → **desaparecen `P-ProtectedUsers` y `P-Delegated`:
+  y `Administrator` marcada como no delegable a **desaparecen `P-ProtectedUsers` y `P-Delegated`:
   Privileged Accounts baja de 50 a 20.** `Administrator` queda fuera de *Protected Users* a propósito,
   como cuenta de emergencia.
 - 🔑 **Y aun así la nota global no se movió (50)**, porque **la global es la PEOR categoría**, y la
